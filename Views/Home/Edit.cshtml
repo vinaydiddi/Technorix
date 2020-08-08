@@ -1,0 +1,77 @@
+﻿@model newmvccore.Models.EditViewModel
+@{
+    ViewData["Title"] = "Edit";
+    var photoPath = "~/image/" + (Model.existingphotopath ?? "noimage.jpg");
+}
+
+<h1>Edit</h1>
+
+    <form asp-controller="home" asp-action="edit" enctype="multipart/form-data" method="post" class="mt-3">
+        <div asp-validation-summary="All" class="text-danger">
+        </div>
+        @*Use hidden input elements to store employee id and ExistingPhotoPath
+            which we need when we submit the form and update data in the database*@
+        <input hidden asp-for="id" />
+        <input hidden asp-for="existingphotopath" />
+
+        @*Bind to the properties of the EmployeeEditViewModel. The asp-for tag helper
+            takes care of displaying the existing data in the respective input elements*@
+        <div class="form-group row">
+            <label asp-for="name" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="name" class="form-control" placeholder="Name">
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="email" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="email" class="form-control" placeholder="Email">
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="department" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <select asp-for="department" class="custom-select mr-sm-2"
+                        asp-items="Html.GetEnumSelectList<DeptEnum>()">
+                    <option value="">Please Select</option>
+                </select>
+                <span asp-validation-for="department" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="photo" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <div class="custom-file">
+                    <input asp-for="photo" class="custom-file-input form-control">
+                    <label class="custom-file-label">Click here to change photo</label>
+                </div>
+            </div>
+        </div>
+
+        @*Display the existing employee photo*@
+        <div class="form-group row col-sm-4 offset-4">
+            <img class="imageThumbnail" src="@photoPath" asp-append-version="true" />
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a asp-action="index" asp-controller="home" class="btn btn-primary">Cancel</a>
+            </div>
+        </div>
+
+        @section Scripts {
+            <script>
+                $(document).ready(function () {
+                    $('.custom-file-input').on("change", function () {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).next('.custom-file-label').html(fileName);
+                    });
+                });
+            </script>
+        }
+    </form>

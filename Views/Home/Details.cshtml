@@ -1,0 +1,30 @@
+﻿
+@model newmvccore.Models.HomeDetailsModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var photoPath = "~/image/" + (Model.emplviewmodel.photopath ?? "noimage.jpg");
+}
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.emplviewmodel.name</h1>
+            </div>
+
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@photoPath" height="200" width="150" asp-append-version="true" />
+
+                <h4>Employee ID : @Model.emplviewmodel.id</h4>
+                <h4>Email : @Model.emplviewmodel.email</h4>
+                <h4>Department : @Model.emplviewmodel.department</h4>
+
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="home" asp-action="index" class="btn btn-primary">Back</a>
+                <a asp-controller="home" asp-action="edit" asp-route-id="@Model.emplviewmodel.id" class="btn btn-primary">Edit</a>
+                <a asp-controller="home" asp-action="deleteemp" asp-route-id="@Model.emplviewmodel.id" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

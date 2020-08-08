@@ -1,0 +1,10 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+<script type="text/javascript">
+    alert("Employee with id"+@Model.id +"deleted sucessfully!!!")
+</script>
+<a asp-controller="home" asp-action="index">Return to Home Page</a>
